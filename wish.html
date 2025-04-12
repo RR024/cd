@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Countdown</title>
+    <link rel="stylesheet" href="wish.css">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <div class="theme-option pastel" data-theme="pastel"></div>
+        <div class="theme-option ocean" data-theme="ocean"></div>
+        <div class="theme-option sunset" data-theme="sunset"></div>
+    </div>
+    
+    <div class="container">
+        <h1>Birthday Countdown</h1>
+        
+        <!-- Photo Gallery -->
+        <div class="photo-gallery">
+            <div class="gallery-container">
+                <div class="photo-item">
+                    <div class="photo-placeholder">Add your favorite photo here</div>
+                </div>
+            </div>
+            <div class="gallery-prev">&#10094;</div>
+            <div class="gallery-next">&#10095;</div>
+        </div>
+        
+        <!-- Countdown Timer -->
+        <div class="countdown">
+            <div class="countdown-item">
+                <span class="countdown-number" id="days">00</span>
+                <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-label">Seconds</span>
+            </div>
+        </div>
+        
+        <!-- Fun Buttons -->
+        <div class="button-container">
+            <button class="type1 button"></button>
+            
+            <a class="c-button c-button--gooey" id="startGameBtn">
+                Play Game
+                <div class="c-button__blobs">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </a>
+            
+            <button class="fun-button" id="surpriseBtn">Surprise!</button>
+        </div>
+        
+        <!-- Game Container -->
+        <div class="game-container" id="gameContainer">
+            <div class="game-score">Score: <span id="gameScore">0</span></div>
+            <div class="game-time">Time: <span id="gameTime">30</span>s</div>
+        </div>
+        
+        <!-- Wish Generator -->
+        <div class="wish-generator">
+            <button class="wish-button" id="generateWishBtn">Generate Birthday Wish</button>
+            <div class="wish-display" id="wishDisplay">Click the button to generate a special birthday wish!</div>
+        </div>
+        
+        <!-- Messages Section -->
+        <div class="messages-section">
+            <div class="messages-header">
+                <h2 class="messages-title">Birthday Messages</h2>
+            </div>
+            <div class="messages-container" id="messagesContainer">
+                <!-- Messages will be added here dynamically -->
+            </div>
+            <form class="message-form" id="messageForm">
+                <input type="text" class="message-input" id="messageInput" placeholder="Leave a birthday message..." required>
+                <button type="submit" class="submit-message">Send</button>
+            </form>
+        </div>
+        
+        <!-- Timeline Section -->
+        <div class="timeline-section">
+            <div class="timeline-header">
+                <h2 class="timeline-title">Birthday Timeline</h2>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <!-- Timeline events will be added here dynamically -->
+            </div>
+        </div>
+        
+        <div class="footer">
+            Made with <span class="heart">❤</span> for your special day
+        </div>
+    </div>
+    
+    <!-- Popup -->
+    <div class="popup-overlay" id="surprisePopup">
+        <div class="popup-content">
+            <div class="popup-close">&times;</div>
+            <div class="popup-title">Happy Birthday!</div>
+            <div class="popup-emoji">🎂</div>
+            <div class="popup-message">Wishing you a day filled with happiness and a year filled with joy. May all your wishes come true!</div>
+        </div>
+    </div>
+    
+    <!-- SVG Filter for Button Effect -->
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: none;">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+                <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+        </defs>
+    </svg>
+
+
+    <script src="wish.js"></script>
+</body>
+</html>

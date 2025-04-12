@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Well Do You Know Me?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #6c5ce7;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .question {
+            margin-bottom: 25px;
+            display: none;
+        }
+        .question.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .question h3 {
+            margin-bottom: 15px;
+            color: #2d3436;
+        }
+        .options {
+            display: grid;
+            grid-gap: 10px;
+        }
+        .option {
+            padding: 12px 15px;
+            background-color: #8ca2b9;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: left;
+            font-size: 16px;
+        }
+        .option:hover {
+            background-color: #8ca2b9;
+        }
+        .option.selected {
+            background-color: #a29bfe;
+            color: white;
+        }
+        .option.correct {
+            background-color: #55efc4;
+        }
+        .option.incorrect {
+            background-color: #ff7675;
+            color: white;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #5649c0;
+        }
+        button:disabled {
+            background-color: #b2b2b2;
+            cursor: not-allowed;
+        }
+        .progress-container {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #6c5ce7;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        #quiz-end {
+            display: none;
+            text-align: center;
+        }
+        .score-container {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .score {
+            font-weight: bold;
+            color: #6c5ce7;
+        }
+        .message {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .restart-btn {
+            margin-top: 20px;
+        }
+        .custom-message {
+            border: 2px solid #6c5ce7;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #f3f2ff;
+        }
+        .next-page-btn {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #3d405b;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 15px;
+            padding: 12px;
+            width: 130px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .next-page-btn span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+        .next-page-btn span:after {
+            content: '»';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -15px;
+            transition: 0.5s;
+        }
+        .next-page-btn:hover span {
+            padding-right: 15px;
+        }
+        .next-page-btn:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>How Well Do You Know Me?</h1>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progress"></div>
+        </div>
+        
+        <div id="quiz-content">
+            <!-- Questions will be dynamically added here -->
+        </div>
+        
+        <div id="quiz-end">
+            <h2>Quiz Complete!</h2>
+            <div class="score-container">
+                Your score: <span class="score" id="final-score">0/0</span>
+            </div>
+            <div class="message" id="result-message"></div>
+            <div class="custom-message" id="custom-message"></div>
+            <div class="buttons-container">
+                <button class="restart-btn" onclick="restartQuiz()">Take the Quiz Again</button>
+                <button class="next-page-btn" onclick="goToNextPage()"><span>Next Level</span></button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="prev-btn" onclick="showPreviousQuestion()" disabled>Previous</button>
+            <button id="next-btn" onclick="showNextQuestion()" disabled>Next</button>
+        </div>
+    </div>
+
+    <script>
+        // This is where you'll customize the questions about yourself
+        const questions = [
+            {
+                question: "What's my favorite food?",
+                options: [
+                    "Parotta",
+                    "Biriyani",
+                    "Fried rice",
+                    "pasta"
+                ],
+                answer: 0 // Index of the correct answer (0-based)
+            },
+            {
+                question: "What's my dream vacation destination?",
+                options: [
+                    "Paris, France",
+                    "Tokyo, Japan",
+                    "Bali, Indonesia",
+                    "New York City, USA"
+                ],
+                answer: 1
+            },
+            {
+                question: "What's my favorite movie?",
+                options: [
+                    "oh my kadavule",
+                    "Joe",
+                    "Sita ramam",
+                    "96"
+                ],
+                answer: 2
+            },
+            {
+                question: "What's my favorite color?",
+                options: [
+                    "Blue",
+                    "Green",
+                    "Red",
+                    "Black"
+                ],
+                answer: 1
+            },
+            {
+                question: "Who do you think is more important to me, you or Jerry?",
+                options: [
+                    "Defenitely Jerry",
+                    "Sadly you",
+                    "Such a complicated question",
+                    "both(if you need answer dm me)"
+                ],
+                answer: 2
+            },
+            {
+                question: "Which is my fav song?",
+                options: [
+                    "Anbe anbe (from darling)",
+                    "Munnal kadhali (from mirudhan)",
+                    "Newnork nagaram(from sillunu oru kadhal)",
+                    "Kan pesum varthaigal(froom 7g rainbow colony)"
+                ],
+                answer: 0
+            },
+            {
+                question: "If I could have any superpower, what would it be?",
+                options: [
+                    "Invisibility",
+                    "Flying",
+                    "Time travel",
+                    "Mind reading"
+                ],
+                answer: 2
+            },
+            {
+                question: "What was my childhood dream job?",
+                options: [
+                    "Doctor",
+                    "Astronaut",
+                    "Musicican",
+                    "Scientist"
+                ],
+                answer: 3
+            },
+            {
+                question: "What's my favorite season?",
+                options: [
+                    "Spring",
+                    "Summer",
+                    "Fall",
+                    "Winter"
+                ],
+                answer: 2
+            },
+            {
+                question: "What's my go-to drink?",
+                options: [
+                    "Coffee",
+                    "Tea",
+                    "Beer",
+                    "Water"
+                ],
+                answer: 1
+            }
+        ];
+
+        // Results messages based on score
+        const resultMessages = [
+            { threshold: 0, message: "Hmm, we might need to spend more time together! 🙃" },
+            { threshold: 4, message: "You know some things about me, but there's more to learn!🥲" },
+            { threshold: 7, message: "Great job!  Somewhat You know about me!" },
+            { threshold: 10, message: "Wow! You know me better than I know myself! ❤️" }
+        ];
+
+        // Custom message to show at the end (personalize this!)
+        const customEndMessage = "Thank you for taking the time to do this quiz! It means a lot to me that you want to learn more about me. I'm looking forward to our next adventure together!";
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let answered = false;
+        
+        // Function to go to the next page
+        function goToNextPage() {
+            window.location.href = "nextlevel.html";
+        }
+        
+        // Initialize the quiz
+        function initQuiz() {
+            const quizContent = document.getElementById('quiz-content');
+            quizContent.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const questionEl = document.createElement('div');
+                questionEl.classList.add('question');
+                if (index === 0) questionEl.classList.add('active');
+                
+                questionEl.innerHTML = `
+                    <h3>${index + 1}. ${q.question}</h3>
+                    <div class="options">
+                        ${q.options.map((option, i) => `
+                            <button class="option" data-index="${i}" onclick="selectOption(${index}, ${i})">${option}</button>
+                        `).join('')}
+                    </div>
+                `;
+                
+                quizContent.appendChild(questionEl);
+            });
+            
+            updateControls();
+            updateProgress();
+        }
+        
+        // Select an answer
+        function selectOption(questionIndex, optionIndex) {
+            if (answered) return;
+            
+            const questionElements = document.querySelectorAll('.question');
+            const options = questionElements[questionIndex].querySelectorAll('.option');
+            
+            // Clear previous selection
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Select new option
+            options[optionIndex].classList.add('selected');
+            selectedAnswer = optionIndex;
+            
+            // Enable the Next button
+            document.getElementById('next-btn').disabled = false;
+        }
+        
+        // Show the next question
+        function showNextQuestion() {
+            const questions = document.querySelectorAll('.question');
+            
+            // If an answer was selected, check it
+            if (selectedAnswer !== null && !answered) {
+                checkAnswer();
+                answered = true;
+                document.getElementById('next-btn').textContent = currentQuestion < questions.length - 1 ? 'Next Question' : 'See Results';
+                return;
+            }
+            
+            // If already answered, move to next question
+            if (currentQuestion < questions.length - 1) {
+                questions[currentQuestion].classList.remove('active');
+                currentQuestion++;
+                questions[currentQuestion].classList.add('active');
+                
+                // Reset for new question
+                selectedAnswer = null;
+                answered = false;
+                document.getElementById('next-btn').disabled = true;
+                document.getElementById('next-btn').textContent = 'Next';
+            } else {
+                // End of quiz
+                showResults();
+            }
+            
+            updateControls();
+            updateProgress();
+        }
+        
+        // Show the previous question
+        function showPreviousQuestion() {
+            if (currentQuestion > 0) {
+                const questions = document.querySelectorAll('.question');
+                questions[currentQuestion].classList.remove('active');
+                currentQuestion--;
+                questions[currentQuestion].classList.add('active');
+                
+                // Reset controls as needed
+                selectedAnswer = null;
+                answered = false;
+                document.getElementById('next-btn').disabled = true;
+                document.getElementById('next-btn').textContent = 'Next';
+                
+                updateControls();
+                updateProgress();
+            }
+        }
+        
+        // Check if the selected answer is correct
+        function checkAnswer() {
+            const correctAnswer = questions[currentQuestion].answer;
+            const questionElements = document.querySelectorAll('.question');
+            const options = questionElements[currentQuestion].querySelectorAll('.option');
+            
+            // Show correct/incorrect
+            options.forEach((opt, index) => {
+                if (index === correctAnswer) {
+                    opt.classList.add('correct');
+                } else if (index === selectedAnswer) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            // Update score
+            if (selectedAnswer === correctAnswer) {
+                score++;
+            }
+        }
+        
+        // Update the button states
+        function updateControls() {
+            document.getElementById('prev-btn').disabled = currentQuestion === 0;
+            document.getElementById('next-btn').disabled = selectedAnswer === null;
+        }
+        
+        // Update the progress bar
+        function updateProgress() {
+            const progressBar = document.getElementById('progress');
+            const progressPercent = ((currentQuestion) / questions.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+        }
+        
+        // Show the final results
+        function showResults() {
+            document.getElementById('quiz-content').style.display = 'none';
+            document.getElementById('quiz-end').style.display = 'block';
+            document.getElementById('final-score').textContent = `${score}/${questions.length}`;
+            document.getElementById('prev-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            
+            // Display appropriate message based on score
+            let message = '';
+            for (let i = resultMessages.length - 1; i >= 0; i--) {
+                if (score >= resultMessages[i].threshold) {
+                    message = resultMessages[i].message;
+                    break;
+                }
+            }
+            document.getElementById('result-message').textContent = message;
+            document.getElementById('custom-message').textContent = customEndMessage;
+            
+            // Update final progress
+            const progressBar = document.getElementById('progress');
+            progressBar.style.width = '100%';
+        }
+        
+        // Restart the quiz
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = null;
+            answered = false;
+            
+            document.getElementById('quiz-content').style.display = 'block';
+            document.getElementById('quiz-end').style.display = 'none';
+            document.getElementById('prev-btn').style.display = 'inline-block';
+            document.getElementById('next-btn').style.display = 'inline-block';
+            document.getElementById('next-btn').textContent = 'Next';
+            
+            const questions = document.querySelectorAll('.question');
+            questions.forEach((q, index) => {
+                q.classList.remove('active');
+                
+                // Reset all options
+                const options = q.querySelectorAll('.option');
+                options.forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'incorrect');
+                });
+                
+                // Make first question active
+                if (index === 0) q.classList.add('active');
+            });
+            
+            updateControls();
+            updateProgress();
+        }
+        
+        // Initialize the quiz when the page loads
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>

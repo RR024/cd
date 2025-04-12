@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Photo Gallery</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f2f0e6;
+      color: #333;
+      line-height: 1.6;
+      background-image: url('data:image/png;base64,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');
+    }
+    
+    header {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    .intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 3rem auto;
+      padding: 0 1rem;
+    }
+    
+    /* New paper-style gallery */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 3rem;
+      padding: 20px;
+    }
+    
+    .gallery-item {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      background-color: #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      padding: 10px;
+      transform: rotate(0deg);
+      transition: all 0.3s ease;
+      overflow: visible;
+    }
+    
+    .gallery-item:nth-child(odd) {
+      transform: rotate(-2deg);
+    }
+    
+    .gallery-item:nth-child(even) {
+      transform: rotate(2deg);
+    }
+    
+    .gallery-item:nth-child(3n) {
+      transform: rotate(-1deg);
+    }
+    
+    .gallery-item:hover {
+      transform: rotate(0deg) scale(1.05);
+      z-index: 10;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.02);
+      pointer-events: none;
+    }
+    
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 15px;
+      background-color: rgba(0,0,0,0.1);
+      border-radius: 3px;
+      box-shadow: 0 0 2px rgba(0,0,0,0.2);
+      z-index: 11;
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: calc(100% - 40px);
+      object-fit: cover;
+      display: block;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .item-caption {
+      position: relative;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 10px 5px;
+      color: #333;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+      background-color: transparent;
+    }
+    
+    .gallery-item:hover .item-caption {
+      transform: translateY(0);
+    }
+    
+    .memory-section {
+      background-color: white;
+      padding: 3rem 0;
+      text-align: center;
+      margin: 2rem 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+      position: relative;
+      background-image: url('data:image/png;base64,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');
+    }
+    
+    .memory-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .memory-section::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 20px;
+      background-color: rgba(0,0,0,0.1);
+      border-radius: 3px;
+      box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    }
+    
+    .button {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      color: white;
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 1rem;
+    }
+    
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255,154,158,0.4);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      background-color: #fad0c4;
+      color: #333;
+    }
+    
+    @media (max-width: 768px) {
+      .gallery {
+        gap: 20px;
+      }
+      
+      .gallery-item {
+        width: 250px;
+        height: 250px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+    
+    /* Slideshow styles */
+    .slideshow-container {
+      max-width: 800px;
+      position: relative;
+      margin: auto;
+      margin-bottom: 3rem;
+      height: 500px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      background-color: white;
+      padding: 15px;
+      transform: rotate(-1deg);
+    }
+    
+    .slideshow-title {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      position: relative;
+    }
+    
+    .slideshow-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    }
+    
+    .mySlides {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .mySlides img {
+      width: 100%;
+      height: calc(100% - 40px);
+      object-fit: cover;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .slideshow-caption {
+      height: 40px;
+      width: 100%;
+      color: #333;
+      padding: 10px;
+      text-align: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: auto;
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+      background-color: rgba(0,0,0,0.3);
+    }
+    
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+    
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.8);
+    }
+    
+    .dot-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .dot {
+      cursor: pointer;
+      height: 10px;
+      width: 10px;
+      margin: 0 5px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+    
+    .active, .dot:hover {
+      background-color: #ff9a9e;
+    }
+    
+    .fade {
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+    
+    .tape {
+      position: absolute;
+      width: 50px;
+      height: 20px;
+      background-color: rgba(255,255,255,0.6);
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      opacity: 0.7;
+      transform: rotate(30deg);
+      z-index: 5;
+    }
+    
+    .tape-top-left {
+      top: -5px;
+      left: -5px;
+      transform: rotate(-30deg);
+    }
+    
+    .tape-top-right {
+      top: -5px;
+      right: -5px;
+      transform: rotate(30deg);
+    }
+    
+    .tape-bottom-left {
+      bottom: -5px;
+      left: -5px;
+      transform: rotate(30deg);
+    }
+    
+    .tape-bottom-right {
+      bottom: -5px;
+      right: -5px;
+      transform: rotate(-30deg);
+    }
+    
+    @keyframes fade {
+      from {opacity: .4} 
+      to {opacity: 1}
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>Happy Birthday, [Friend's Name]!</h1>
+      <p class="subtitle">A journey through our friendship and memories</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="intro">
+      <h2>💕 Our Friendship Story 💕</h2>
+      <p>Dear [Friend's Name], this gallery is a celebration of our incredible friendship and all the wonderful moments we've shared. From our first meeting to our latest adventure, each photo captures a piece of our story. I hope these memories bring a smile to your face on your special day!</p>
+    </div>
+    
+    <!-- Featured Slideshow -->
+    <h2 class="slideshow-title">Favorite Moments</h2>
+    <div class="slideshow-container">
+      <div class="mySlides fade">
+        <img src="/api/placeholder/800/500" alt="Favorite memory 1">
+        <div class="slideshow-caption">That amazing trip to the beach last summer</div>
+      </div>
+
+      <div class="mySlides fade">
+        <img src="/api/placeholder/800/500" alt="Favorite memory 2">
+        <div class="slideshow-caption">Our first roadtrip together</div>
+      </div>
+
+      <div class="mySlides fade">
+        <img src="/api/placeholder/800/500" alt="Favorite memory 3">
+        <div class="slideshow-caption">That time we tried cooking and almost burned down the kitchen</div>
+      </div>
+
+      <a class="prev" onclick="plusSlides(-1)">❮</a>
+      <a class="next" onclick="plusSlides(1)">❯</a>
+    </div>
+
+    <div class="dot-container">
+      <span class="dot" onclick="currentSlide(1)"></span> 
+      <span class="dot" onclick="currentSlide(2)"></span> 
+      <span class="dot" onclick="currentSlide(3)"></span> 
+    </div>
+    
+    <!-- Photo Gallery -->
+    <h2 class="slideshow-title">Photo Gallery</h2>
+    <div class="gallery">
+      <div class="gallery-item">
+        <div class="tape tape-top-left"></div>
+        <div class="tape tape-bottom-right"></div>
+        <img src="/api/placeholder/400/300" alt="Memory 1">
+        <div class="item-caption">Our first day of college</div>
+      </div>
+      <div class="gallery-item">
+        <div class="tape tape-top-right"></div>
+        <div class="tape tape-bottom-left"></div>
+        <img src="/api/placeholder/400/300" alt="Memory 2">
+        <div class="item-caption">Your surprise birthday party last year</div>
+      </div>
+      <div class="gallery-item">
+        <div class="tape tape-top-left"></div>
+        <div class="tape tape-bottom-right"></div>
+        <img src="/api/placeholder/400/300" alt="Memory 3">
+        <div class="item-caption">Coffee shop study sessions</div>
+      </div>
+      <div class="gallery-item">
+        <div class="tape tape-top-right"></div>
+        <div class="tape tape-bottom-left"></div>
+        <img src="/api/placeholder/400/300" alt="Memory 4">
+        <div class="item-caption">That time we got lost hiking</div>
+      </div>
+      <div class="gallery-item">
+        <div class="tape tape-top-left"></div>
+        <div class="tape tape-bottom-right"></div>
+        <img src="/api/placeholder/400/300" alt="Memory 5">
+        <div class="item-caption">Movie night with popcorn fights</div>
+      </div>
+      <div class="gallery-item">
+        <div class="tape tape-top-right"></div>
+        <div class="tape tape-bottom-left"></div>
+        <img src="/api/placeholder/400/300" alt="Memory 6">
+        <div class="item-caption">Morning walks in the park</div>
+      </div>
+      <div class="gallery-item">
+        <div class="tape tape-top-left"></div>
+        <div class="tape tape-bottom-right"></div>
+        <img src="/api/placeholder/400/300" alt="Memory 7">
+        <div class="item-caption">Our crazy karaoke night</div>
+      </div>
+      <div class="gallery-item">
+        <div class="tape tape-top-right"></div>
+        <div class="tape tape-bottom-left"></div>
+        <img src="/api/placeholder/400/300" alt="Memory 8">
+        <div class="item-caption">Weekend getaway to the mountains</div>
+      </div>
+      <div class="gallery-item">
+        <div class="tape tape-top-left"></div>
+        <div class="tape tape-bottom-right"></div>
+        <img src="/api/placeholder/400/300" alt="Memory 9">
+        <div class="item-caption">That time we tried a new restaurant</div>
+      </div>
+    </div>
+    
+    <!-- Special Memory Section -->
+    <div class="memory-section">
+      <div class="memory-content">
+        <h2>A Special Message For You</h2>
+        <p>Dear [Friend's Name],</p>
+        <p>Happy Birthday to my amazing friend! From the day we met, you've brought so much joy, laughter, and adventure into my life. Your kindness, strength, and incredible spirit inspire me every day.</p>
+        <p>This gallery is just a small collection of the countless memories we've made together. Each photo represents a moment where you've made my life brighter just by being you.</p>
+        <p>Here's to many more years of friendship, adventures, and creating memories together!</p>
+        <p>With love,</p>
+        <p>[Your Name]</p>
+      </div>
+    </div>
+    
+    <!-- Birthday Wishes Section -->
+    <h2 class="slideshow-title">Birthday Wishes</h2>
+    <div class="gallery">
+      <div class="gallery-item">
+        <div class="tape tape-top-left"></div>
+        <div class="tape tape-bottom-right"></div>
+        <img src="/api/placeholder/400/300" alt="Birthday wish 1">
+        <div class="item-caption">Wishing you a year filled with adventure!</div>
+      </div>
+      <div class="gallery-item">
+        <div class="tape tape-top-right"></div>
+        <div class="tape tape-bottom-left"></div>
+        <img src="/api/placeholder/400/300" alt="Birthday wish 2">
+<div class="item-caption">May your day be as special as you are!</div>
+      </div>
+      <div class="gallery-item">
+        <div class="tape tape-top-left"></div>
+        <div class="tape tape-bottom-right"></div>
+        <img src="/api/placeholder/400/300" alt="Birthday wish 3">
+        <div class="item-caption">Cheers to another year of friendship!</div>
+      </div>
+    </div>
+    
+    <!-- Gift Section -->
+    <div class="memory-section">
+      <div class="memory-content">
+        <h2>Your Birthday Gift</h2>
+        <p>I've prepared something special for you that I hope will make your day even more magical!</p>
+        <p>Check your email for a surprise, or better yet, let's meet up so I can give you your gift in person.</p>
+        <a href="#" class="button">Arrange Meet-up</a>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="container">
+      <p>Made with love for [Friend's Name]'s birthday - [Year]</p>
+      <p>© [Your Name]</p>
+    </div>
+  </footer>
+
+  <script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+    }
+    
+    // Auto slideshow
+    setInterval(function() {
+      plusSlides(1);
+    }, 5000);
+  </script>
+</body>
+</html>
